@@ -6,7 +6,7 @@
 /*   By: bgannoun <bgannoun@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:31:41 by bgannoun          #+#    #+#             */
-/*   Updated: 2023/01/12 20:22:05 by bgannoun         ###   ########.fr       */
+/*   Updated: 2023/01/12 20:27:27 by bgannoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ void	convert_to_char(void)
 
 void	signal_handler(int signum)
 {
-	static int	indx ;
+	static int	index ;
 
 	if (signum == SIGUSR1)
-		g_binary[indx] = '0';
+		g_binary[index] = '0';
 	if (signum == SIGUSR2)
-		g_binary[indx] = '1';
-	indx++ ;
-	if (indx == 8)
+		g_binary[index] = '1';
+	index++ ;
+	if (index == 8)
 	{
-		g_binary[indx + 1] = '\0';
+		g_binary[index + 1] = '\0';
 		convert_to_char();
-		indx = 0;
+		index = 0;
 	}
 }
 
