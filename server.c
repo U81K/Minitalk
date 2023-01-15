@@ -6,7 +6,7 @@
 /*   By: bgannoun <bgannoun@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:31:41 by bgannoun          #+#    #+#             */
-/*   Updated: 2023/01/12 20:27:27 by bgannoun         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:04:36 by bgannoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,17 @@ void	convert_to_char(void)
 	write(1, &result, 1);
 }
 
-void	signal_handler(int signum)
+void	signal_handler(int signum, siginfo_t *signal, void *oldact)
 {
-	static int	index ;
+	static int		index ;
+	static pid_t	actpid;
 
+	(void)oldact;
+	if (signal->si_pid != actpid)
+	{
+		actpid = signal->si_pid;
+		index = 0;
+	}
 	if (signum == SIGUSR1)
 		g_binary[index] = '0';
 	if (signum == SIGUSR2)
@@ -70,12 +77,15 @@ void	signal_handler(int signum)
 
 int	main(void)
 {
-	pid_t	id;
+	pid_t				id;
+	struct sigaction	act;
 
+	act.sa_sigaction = &signal_handler;
+	act.sa_flags = SA_RESTART;
 	id = getpid();
 	printf("%d\n", id);
-	signal(SIGUSR1, signal_handler);
-	signal(SIGUSR2, signal_handler);
+	sigaction(SIGUSR1, &act, NULL);
+	sigaction(SIGUSR2, &act, NULL);
 	while (1)
 		pause();
 	return (0);
