@@ -6,7 +6,7 @@
 #    By: bgannoun <bgannoun@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/12 18:17:20 by bgannoun          #+#    #+#              #
-#    Updated: 2023/01/12 20:09:50 by bgannoun         ###   ########.fr        #
+#    Updated: 2023/01/17 00:31:28 by bgannoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ RM = rm -fr
 all:$(CLIENT) $(SERVER)
 
 $(CLIENT):
-	CC $(FLAGS) -o client client.c
+	cd libft && make all
+	CC $(FLAGS) libft/libft.a -o client client.c
 
 $(SERVER):
 	CC $(FLAGS) -o server server.c
@@ -31,6 +32,4 @@ fclean:
 	$(RM) client
 	$(RM) server
 	
-re:
-	$(RM) client
-	$(RM) server
+re: fclean all

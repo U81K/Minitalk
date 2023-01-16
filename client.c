@@ -6,38 +6,11 @@
 /*   By: bgannoun <bgannoun@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:32:06 by bgannoun          #+#    #+#             */
-/*   Updated: 2023/01/12 20:15:10 by bgannoun         ###   ########.fr       */
+/*   Updated: 2023/01/17 00:49:59 by bgannoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minitalk.h"
-
-int	ft_atoi(char *a)
-{
-	int	sign;
-	int	i;
-	int	res;
-
-	i = 0;
-	while (a[i] == ' ' || a[i] == '\t' || a[i] == '\v' || a[i] == '\n'
-		|| a[i] == '\f' || a[i] == '\r')
-		i++;
-	sign = 1;
-	while (a[i] == '+' || a[i] == '-')
-	{
-		if (a[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	res = 0;
-	while (a[i] >= '0' && a[i] <= '9')
-	{
-		res = res * 10;
-		res += a[i] - 48;
-		i++;
-	}
-	return (res * sign);
-}
 
 void	char_to_bin(int n, char *bin)
 {
@@ -58,7 +31,7 @@ void	send_char(int n, pid_t id)
 	int		i;
 
 	i = 0;
-	bin = strdup("00000000");
+	bin = ft_strdup("00000000");
 	char_to_bin(n, bin);
 	while (bin[i])
 	{
@@ -69,6 +42,7 @@ void	send_char(int n, pid_t id)
 		i++;
 		usleep(200);
 	}
+	free(bin);
 }
 
 int	main(int ac, char **av)
