@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bgannoun <bgannoun@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 18:17:46 by bgannoun          #+#    #+#             */
-/*   Updated: 2023/01/19 01:18:55 by bgannoun         ###   ########.fr       */
+/*   Created: 2022/10/21 16:41:15 by bgannoun          #+#    #+#             */
+/*   Updated: 2022/10/23 19:57:05 by bgannoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "ft_printf.h"
 
-# include "libft/libft.h"
-# include "ft_printf/ft_printf.h"
-# include <signal.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <stdlib.h>
+int	ft_putnbr(long int n)
+{
+	char	c;
+	int		count;
 
-#endif
+	count = 0;
+	if (n < 0)
+	{
+		count += ft_putchar('-');
+		n *= -1;
+	}
+	if (n > 9)
+	{
+		count += ft_putnbr(n / 10);
+		count += ft_putnbr(n % 10);
+	}
+	c = n + '0';
+	if (n >= 0 && n <= 9)
+		count += ft_putchar(c);
+	return (count);
+}

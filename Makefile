@@ -6,30 +6,38 @@
 #    By: bgannoun <bgannoun@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/12 18:17:20 by bgannoun          #+#    #+#              #
-#    Updated: 2023/01/17 00:31:28 by bgannoun         ###   ########.fr        #
+#    Updated: 2023/01/19 02:13:27 by bgannoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CLIENT = client
-SERVER = server
-FLAGS = -Wall -Wextra -Werror
-RM = rm -fr
+CC		=	gcc
+CFLAGS	=	-Wall -Wextra -Werror
+RM		=	rm -rf
+SRC		= 	client.c server.c
+OBJ		=	$(SRC:.c=.o)
+LIBFT	=	libft/libft.a
+PRINTF	=	ft_printf/libftprintf.a
 
-all:$(CLIENT) $(SERVER)
+all			:	client server
 
-$(CLIENT):
-	cd libft && make all
-	CC $(FLAGS) libft/libft.a -o client client.c
+client		:	client.o $(LIBFT) $(PRINTF)
+		$(CC) $(CFLAGS) -o client client.o $(LIBFT) $(PRINTF)
 
-$(SERVER):
-	CC $(FLAGS) -o server server.c
+server		:	server.o $(LIBFT) $(PRINTF)
+		$(CC) $(CFLAGS) -o server server.o $(LIBFT) $(PRINTF)
 
-clean:
-	$(RM) client
-	$(RM) server
+$(PRINTF)	:
+		cd ft_printf/ && $(MAKE)
 
-fclean:
-	$(RM) client
-	$(RM) server
-	
-re: fclean all
+$(LIBFT)	:
+		cd libft/ && $(MAKE)
+
+clean		:
+		$(RM) $(OBJ)
+		cd libft/ && $(MAKE) clean
+		cd ft_printf/ && $(MAKE) clean
+
+fclean		:	clean
+		$(RM) client server $(PRINTF) $(LIBFT)
+
+re			:	fclean all

@@ -6,7 +6,7 @@
 /*   By: bgannoun <bgannoun@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:31:41 by bgannoun          #+#    #+#             */
-/*   Updated: 2023/01/17 00:13:24 by bgannoun         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:17:45 by bgannoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(void)
 	act.sa_sigaction = &signal_handler;
 	act.sa_flags = SA_RESTART;
 	id = getpid();
-	printf("%d\n", id);
+	ft_printf("%d\n", id);
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 	while (1)
