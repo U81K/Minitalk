@@ -6,7 +6,7 @@
 /*   By: bgannoun <bgannoun@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:32:06 by bgannoun          #+#    #+#             */
-/*   Updated: 2023/01/19 02:17:32 by bgannoun         ###   ########.fr       */
+/*   Updated: 2023/01/19 04:16:14 by bgannoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	send_char(int n, pid_t id)
 {
 	char	*bin;
 	int		i;
+	int		j;
 
 	i = 0;
 	bin = ft_strdup("00000000");
@@ -36,10 +37,12 @@ void	send_char(int n, pid_t id)
 	while (bin[i])
 	{
 		if (bin[i] == '0')
-			kill(id, SIGUSR1);
+			j = kill(id, SIGUSR1);
 		else if (bin[i] == '1')
-			kill(id, SIGUSR2);
+			j = kill(id, SIGUSR2);
 		i++;
+		if (j == -1)
+			exit(-1);
 		usleep(200);
 	}
 	free(bin);
@@ -53,6 +56,8 @@ int	main(int ac, char **av)
 	if (ac != 3)
 		return (1);
 	id = ft_atoi(av[1]);
+	if (id <= 1)
+		exit (-1);
 	i = 0;
 	while (av[2][i])
 	{
